@@ -5,7 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import model.Etsyitem;
-import EtsyTools.DBUtil;
+import customTools.DBUtil;
 
 public class EtsyitemDB {
 	public static List<Etsyitem> select() {

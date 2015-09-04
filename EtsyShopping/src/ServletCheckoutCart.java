@@ -81,6 +81,10 @@ public class ServletCheckoutCart extends HttpServlet {
 			tableData += "<th>";
 			tableData += "Price";
 			tableData += "</th>";
+
+			tableData += "<th>";
+			tableData += "Shiping Cost";
+			tableData += "</th>";
 			tableData += "<th>";
 			tableData += "TotalPrice";
 			tableData += "</th>";
@@ -100,6 +104,10 @@ public class ServletCheckoutCart extends HttpServlet {
 				tableData += "</td>";
 				tableData += "<td>";
 				tableData +=  "$"+c.getEtsyitem().getItemPrice();
+				tableData += "</td>";
+
+				tableData += "<td>";
+				tableData += "$" + c.getEtsyitem().getItemShippingcost();
 				tableData += "</td>";
 				tableData += "<td>";
 				tableData +=  "$"+c.getTotalprice();

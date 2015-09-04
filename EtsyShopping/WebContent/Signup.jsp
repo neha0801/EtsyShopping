@@ -11,19 +11,7 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<nav class="navbar navbar-default">
-<div class="container-fluid">
-<div class="navbar-header">
-<a class="navbar-brand" href="EtsyProduct">Etsy Shopping</a>
-</div>
-<div>
-<ul class="nav navbar-nav navbar-right">
-<li><a href="Login.jsp">Login</a></li>
-</ul>
-</div>
-</div>
-</nav>
+<jsp:include page="Navbar.jsp"/>
 <script type="text/javascript">
 function validateForm() {
 	var a = document.forms["SignupForm"]["name"].value;

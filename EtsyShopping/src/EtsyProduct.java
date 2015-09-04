@@ -19,35 +19,46 @@ import model.Etsyitem;
 public class EtsyProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String productListMsg;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EtsyProduct() {
-        super();
-        productListMsg = "";
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public EtsyProduct() {
+		super();
 		productListMsg = "";
-		List<Etsyitem> productList = EtsyitemDB.selectByInstock(1);
-		
-		if (!productList.isEmpty()) {
-			for (int i = 0; i < productList.size(); i++) {
-				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId=" + productList.get(i).getItemId() + "\">" + productList.get(i).getItemName() + "</a></td><td width=\"40%\">" + formattedPrice(productList.get(i).getItemPrice()) + "</td></tr>";
-			}
-		}
-		request.setAttribute("productListMsg", productListMsg);
-		getServletContext().getRequestDispatcher("/EtsyitemList.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		productListMsg = "";
+		List<Etsyitem> productList = EtsyitemDB.selectByInstock(1);
+
+		if (!productList.isEmpty()) {
+			for (int i = 0; i < productList.size(); i++) {
+				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId="
+						+ productList.get(i).getItemId()
+						+ "\">"
+						+ productList.get(i).getItemName()
+						+ "</a></td><td width=\"40%\">"
+						+ formattedPrice(productList.get(i).getItemPrice())
+						+ "</td></tr>";
+			}
+		}
+		request.setAttribute("productListMsg", productListMsg);
+		getServletContext().getRequestDispatcher("/EtsyitemList.jsp").forward(
+				request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		productListMsg = "";
 		String keyword = request.getParameter("keyword");
 		List<Etsyitem> result = new ArrayList<Etsyitem>();
@@ -56,14 +67,20 @@ public class EtsyProduct extends HttpServlet {
 		} else {
 			result = EtsyitemDB.selectByInstock(1);
 		}
-		
+
 		if (!result.isEmpty()) {
 			for (int i = 0; i < result.size(); i++) {
-				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId=" + result.get(i).getItemId() + "\">" + result.get(i).getItemName() + "</a></td><td width=\"40%\">" + formattedPrice(result.get(i).getItemPrice()) + "</td></tr>";
+				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId="
+						+ result.get(i).getItemId()
+						+ "\">"
+						+ result.get(i).getItemName()
+						+ "</a></td><td width=\"40%\">"
+						+ formattedPrice(result.get(i).getItemPrice())
+						+ "</td></tr>";
 			}
 		}
 	}
-	
+
 	public static String formattedPrice(double total) {
 		DecimalFormat myFormatter = new DecimalFormat("###,##0.00");
 		String output = myFormatter.format(total);

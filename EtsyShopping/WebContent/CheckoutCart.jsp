@@ -34,30 +34,7 @@ body {
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-brand">Etsy Web Store</div>
-		<div>
-			<ul class="nav navbar-nav">
-				<%-- <li><a href="Welcome.jsp" style="color: white"><b>Home</b></a></li>
-				<%
-					Userprofile user = (Userprofile) session.getAttribute("user");
-					if (user != null) {
-						request.setAttribute("userName", user.getUserName());
-				%>
-				<li><a href="Cart" style="color: white"><b>${userName}'s
-							Cart</b></a></li>
-				<li><a href="ExploreProducts?logout=y" style="color: white"><b>Logout</b></a></li>
-				<%
-					}
-				%> --%>
-			</ul>
-		</div>
-	</div>
-	</nav>
-<!-- 	<a href="ExploreProducts?goto=y"
-		class="btn pull-right btn-primary btn-lg">Go Back</a>
-	<br> -->
+<jsp:include page="Navbar.jsp"/>
 	<br>
 	<h1 align=center>
 		<b>Confirm your order</b><br> <br>

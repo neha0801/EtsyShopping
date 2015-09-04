@@ -3,7 +3,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import model.Etsyuser;
-import EtsyTools.DBUtil;
+import customTools.DBUtil;
 
 
 public class EtsyuserDB {
