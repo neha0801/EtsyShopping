@@ -1,10 +1,11 @@
+<%@page import="model.Etsyuser"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Online Store</title>
+<title>Etsy Online Store</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -17,46 +18,41 @@
 h1 {
 	text-align: center;
 	color: black;
-	font-size: 80px;
+	font-size: 50px;
 	font-family: "Edwardian Script ITC";
 }
 
 body {
 	font-family: "Times new Roman";
 	color: black;
-
 	font-size: 15px;
 }
 
-navbar {
-	font-family: "Edwardian Script ITC";
-	color: red;
-	;
-}
-  .panel-transparent {
-        background: none;
-    }
-    
- table td{border-color:red;}
-/*unvisited link*/
-a:link {color: black;}
-/* visited link */
-a:visited {
-    color: black;
-}
-/* mouse over link */
-a:hover {
-    color: red;
-}
-/* selected link */
-a:active {
-    color: red;
-}
+ 
 </style>
 </head>
 
 <body>
-<jsp:include page="Navbar.jsp"/>
-${message}
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+	<div class="navbar-brand">Etsy Web Store</div>
+	<ul class="nav navbar-nav">
+	<li><a href="EtsyProduct">Explore</a></li></ul>
+	<div>
+<ul class="nav navbar-nav navbar-right">
+
+<% if (session.getAttribute("name") == null) { %>
+<li><a href="Signup.jsp">Signup</a></li>
+<li><a href="Login.jsp">Login</a></li>
+<% } else {%>
+<li><a href="UserItemServlet">View My Products</a>
+<li><a href="OrderHistory">View Order History</a></li>
+<li><a href="TempCart">View Cart</a></li>
+<li><a href="Login?logout=true">Logout</a></li>
+<% } %>
+</ul>
+	</div>
+</div>
+</nav>
 </body>
 </html>

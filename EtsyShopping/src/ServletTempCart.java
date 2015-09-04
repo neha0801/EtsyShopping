@@ -154,6 +154,9 @@ public class ServletTempCart extends HttpServlet {
 			tableData += "Price";
 			tableData += "</th>";
 			tableData += "<th>";
+			tableData += "Shiping Cost";
+			tableData += "</th>";
+			tableData += "<th>";
 			tableData += "TotalPrice";
 			tableData += "</th>";
 			tableData += "<th>";
@@ -178,7 +181,11 @@ public class ServletTempCart extends HttpServlet {
 				tableData += "$" + c.getEtsyitem().getItemPrice();
 				tableData += "</td>";
 				tableData += "<td>";
-				tableData += "$" + c.getTotalprice();
+				tableData += "$" + c.getEtsyitem().getItemShippingcost();
+				tableData += "</td>";
+				tableData += "<td>";
+				c.setTotalprice(c.getTotalprice() + c.getEtsyitem().getItemShippingcost());
+				tableData += "$" + (c.getTotalprice());
 				tableData += "</td>";
 				tableData += "<td>";
 				tableData += "<a class='btn btn-danger btn-sm' href='EditCart?itemId="
