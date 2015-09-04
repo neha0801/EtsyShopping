@@ -14,21 +14,23 @@
 
 <jsp:include page="Navbar.jsp"/>
 <div class="container">
-<!-- <form class="form-inline" role="form" name="search" id="search" action="EtsyProduct" method="post">
+<form class="form-inline" role="form" name="search" id="search" action="EtsyProduct" method="post">
   <div class="form-group">
     <label for="keyword">Keyword:</label>
     <input type="text" class="form-control" name="keyword" id="keyword">
   </div>
   <button type="submit" class="btn btn-default" name="keywordSearch" id="keywordSearch">Submit</button>
-</form> -->
+</form>
 </div>
 <div class="container">
 <br />
-<table class="table table-striped">
+<table class="table table-bordered table-striped">
 <thead>
 <tr>
+<th width="40%"></th>
 <th width="60%">Product Name</th>
 <th width="40%">Price</th>
+<th width="40%"></th>
 </tr>
 </thead>
 <tbody>

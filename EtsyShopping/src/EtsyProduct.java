@@ -39,13 +39,21 @@ public class EtsyProduct extends HttpServlet {
 
 		if (!productList.isEmpty()) {
 			for (int i = 0; i < productList.size(); i++) {
-				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId="
+				productListMsg += "<tr><td><img src='"+ productList.get(i).getItenPicture() + "' width ='200' height='200' style=align:center></td>"
+						+ "<td width=\"60%\"><a href=\"EtsyDetails?itemId="
 						+ productList.get(i).getItemId()
 						+ "\">"
 						+ productList.get(i).getItemName()
 						+ "</a></td><td width=\"40%\">"
 						+ formattedPrice(productList.get(i).getItemPrice())
-						+ "</td></tr>";
+						+ "</td><td style='color:red'>";
+				
+				if(productList.get(i).getItemInstock() == 1){
+					productListMsg+="AVAILABLE";
+				}else{
+					productListMsg+="NOT FOR SALE";
+				}
+				productListMsg+="</td></tr>";
 			}
 		}
 		request.setAttribute("productListMsg", productListMsg);
