@@ -35,7 +35,7 @@ public class EtsyProduct extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		productListMsg = "";
-		List<Etsyitem> productList = EtsyitemDB.selectByInstock(1);
+		List<Etsyitem> productList = EtsyitemDB.select();
 
 		if (!productList.isEmpty()) {
 			for (int i = 0; i < productList.size(); i++) {
@@ -46,12 +46,12 @@ public class EtsyProduct extends HttpServlet {
 						+ productList.get(i).getItemName()
 						+ "</a></td><td width=\"40%\">"
 						+ formattedPrice(productList.get(i).getItemPrice())
-						+ "</td><td style='color:red'>";
+						+ "</td>";
 				
 				if(productList.get(i).getItemInstock() == 1){
-					productListMsg+="AVAILABLE";
+					productListMsg+="<td>AVAILABLE";
 				}else{
-					productListMsg+="NOT FOR SALE";
+					productListMsg+="<td style='color:red'>NOT FOR SALE";
 				}
 				productListMsg+="</td></tr>";
 			}
