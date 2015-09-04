@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import customTools.DBUtil;
 import model.Etsycart;
 import model.Etsyuser;
+import customTools.DBUtil;
 
 /**
- * Servlet implementation class ServletCheckoutCart
+ * Servlet implementation class ServletOrderConfirm
  */
-@WebServlet("/CheckoutCart")
-public class ServletCheckoutCart extends HttpServlet {
+@WebServlet("/OrderConfirm")
+public class ServletOrderConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCheckoutCart() {
+    public ServletOrderConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +34,7 @@ public class ServletCheckoutCart extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("do get of cart checkout");
+		System.out.println("order confirm do get");
 		doPost(request,response);
 	}
 
@@ -41,26 +42,26 @@ public class ServletCheckoutCart extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("checkout do post");
 		HttpSession session = request.getSession();		
 		Etsyuser user = (Etsyuser) session.getAttribute("user");
-		//request.setAttribute("user", user.getUserName());
-		//String mesg="";
-		List<Etsycart> cartList = (List<Etsycart>) session.getAttribute("cartList");
-		String message="";
-		//message = "<h2 style='color:red'>"+mesg+ "</h2>";
-		message += showCart(cartList);
-		request.setAttribute("message", message);
-		for(Etsycart c:cartList){
-			System.out.println(c.getCartId() + " " + c.getQuantity() + " " + c.getEtsyitem().getItemName());
-			DBUtil.insert(c);
-		}
-		
-		getServletContext().getRequestDispatcher("/CheckoutCart.jsp").forward(request, response);
-		session.setAttribute("cartList", null);
+		String message = "";
+		System.out.println("fvdsjgfd");
+			Random r = new Random();
+			int confirmationNumber = 1+ r.nextInt(1000000);
+
+			message += "<h1> Your Order confirmation number is " + confirmationNumber + "</h1>";
+			message += showCart(user);
+			System.out.println("user id" + user.getUserId());
+			DBUtil.updateStatus(1,user);
+
+			
+			request.setAttribute("message", message);
+			getServletContext().getRequestDispatcher("/OrderConfirmation.jsp").forward(request, response);
+
 	}
 	
-	private String showCart(List<Etsycart> cartList){
+	private String showCart(Etsyuser user){
+		List<Etsycart> cartList = DBUtil.getUserCart(user);
 		
 		String tableData ="";
 
@@ -86,7 +87,7 @@ public class ServletCheckoutCart extends HttpServlet {
 			tableData += "</th>";
 			tableData += "</thead>";
 			tableData += "</tr>";
-			
+			System.out.println();
 			for(Etsycart c : cartList){
 				tableData += "<tr>";
 				tableData += "<td>";
@@ -107,11 +108,13 @@ public class ServletCheckoutCart extends HttpServlet {
 				tableData += "</tr>";
 			}
 			tableData += "</table>";
-			tableData+= "<a href='OrderConfirm'class='btn pull-right btn-warning' >Place your order</a>";
 		}else
-			tableData="Your Cart is empty";
-
+			tableData="No items are ordered";
+		tableData+="<div><a href='OrderHistory' class='btn pull-left btn-primary'>Order History</a></div>";
 		return tableData;
 	}
+
+	
+
 
 }

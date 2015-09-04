@@ -17,7 +17,7 @@ import customTools.DBUtil;
 /**
  * Servlet implementation class ServletTempCart
  */
-@WebServlet("/ServletTempCart")
+@WebServlet("/TempCart")
 public class ServletTempCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,15 +55,21 @@ public class ServletTempCart extends HttpServlet {
 		// temp value to test
 		int itemId = 1;
 		HttpSession session = request.getSession();
-
+		String str = (String) session.getAttribute("delete");
+		if(str!=null){
+			itemId=0;
+			
+			session.setAttribute("delete",null);
+		}
 		// get user from the session
 		// Etsyuser user = (Etsyuser) session.getAttribute("user");
-		Etsyuser user = new Etsyuser();
-		/*
-		 * user.setCredit(0); user.setEmail("fdkjghfdkj");
-		 * user.setName("fnhdjkhgf"); user.setPassword("fjd");
-		 * user.setUserId(0);
-		 */
+		Etsyuser user = new Etsyuser() ;
+		
+		 user.setCredit(0);
+		  user.setEmail("fdkjghfdkj");
+		  user.setName("fnhdjkhgf"); 
+		  user.setPassword("fjd");
+		 user.setUserId(4);
 		// create a temp cart
 		Etsycart cObj = new Etsycart();
 		List<Etsycart> cartList = new ArrayList<Etsycart>();
@@ -77,7 +83,7 @@ public class ServletTempCart extends HttpServlet {
 			cObj.setTotalprice(totalPrice);
 			cObj.setEtsyitem(itemObj);
 			// for temp cart user id is null
-			// cObj.setEtsyuser(user);
+			cObj.setEtsyuser(user);
 			// System.out.println("userid" + user.getUserId());
 			System.out.println(cartList);
 			cObj.setCartStatus(0);
@@ -111,6 +117,7 @@ public class ServletTempCart extends HttpServlet {
 		String cartData = showCart(cartList);
 		request.setAttribute("cartData", cartData);
 		String buttons = "";
+		System.out.println(user);
 		if (user != null) {
 			buttons += "<br><a href='CheckoutCart' class='btn pull-right btn-primary btn-lg'>Checkout</a>";
 		} else
@@ -119,6 +126,7 @@ public class ServletTempCart extends HttpServlet {
 		// Long count = DBUtil.itemsInCart(user);
 		// System.out.println("count " + count);
 		request.setAttribute("buttons", buttons);
+		session.setAttribute("user", user);
 		// request.setAttribute("count", count);
 		getServletContext().getRequestDispatcher("/TempCart.jsp").forward(
 				request, response);
@@ -173,7 +181,7 @@ public class ServletTempCart extends HttpServlet {
 				tableData += "$" + c.getTotalprice();
 				tableData += "</td>";
 				tableData += "<td>";
-				tableData += "<a class='btn btn-danger btn-sm' href='EditCart?prodId="
+				tableData += "<a class='btn btn-danger btn-sm' href='EditCart?itemId="
 						+ c.getEtsyitem().getItemId() + "'>Delete</a>";
 				tableData += "</td>";
 				tableData += "</tr>";
