@@ -34,11 +34,11 @@
 </nav>
 <div class="container">
 <form class="form-inline" role="form" name="search" id="search" action="EtsyProduct" method="post">
-  <div class="form-group">
-    <label for="keyword">Keyword:</label>
-    <input type="text" class="form-control" name="keyword" id="keyword">
-  </div>
-  <button type="submit" class="btn btn-default" name="keywordSearch" id="keywordSearch">Submit</button>
+<div class="form-group">
+<label class="control-label" for="keyword">Enter keyword:</label>
+<input type="text" class="form-control" name="keyword" id="keyword"> 
+</div>
+<button type="submit" class="btn btn-default" name="keywordSearch" id="keywordSearch">Submit</button>
 </form>
 </div>
 <div class="container">
