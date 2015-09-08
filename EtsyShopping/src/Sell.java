@@ -36,7 +36,7 @@ public class Sell extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*if (request.getParameter("submit") != null) {
+		if (request.getParameter("submit") != null) {
 			String name = request.getParameter("name");
 			String picture = request.getParameter("picture");
 			String description = request.getParameter("description");
@@ -46,8 +46,8 @@ public class Sell extends HttpServlet {
 			Etsyitem newItem = new Etsyitem(name, picture, description, price, shipping);
 			EtsyitemDB.insert(newItem);
 			
-			response.sendRedirect("/EtsyShopping/EtsyProduct");*/
-		//}
+			response.sendRedirect("/EtsyShopping/EtsyProduct");
+		}
 	}
 
 }
