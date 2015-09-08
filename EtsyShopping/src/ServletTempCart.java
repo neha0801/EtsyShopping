@@ -45,35 +45,48 @@ public class ServletTempCart extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("dopost");
-
+		List<Etsycart> cartList = null;
 		// get the quantity from item detail page
-		// String quanStr= request.getParameter("quantity");
+		 String quanStr= request.getParameter("quantity");
 		// temp value
-		String quanStr = "1";
+		//String quanStr = "1";
 		// get the itemId selected from itemdetail page
-		// int itemId = request.getParameter("itemId");
+		 
 		// temp value to test
-		int itemId = 1;
+
 		HttpSession session = request.getSession();
+		String itemIdStr=request.getParameter("itemId");
+		System.out.println(request.getParameter("itemId"));
+		long itemId = 0;
+		if(itemIdStr!=null)
+			itemId = Long.parseLong(request.getParameter("itemId"));
+		//int itemId= Integer.parseInt(itemIdStr);
 		String str = (String) session.getAttribute("delete");
 		if(str!=null){
-			itemId=0;
-			
+			itemId = (long) session.getAttribute("itemId");
+			cartList = (List<Etsycart>) session.getAttribute("cartList");
+			for(Etsycart c : cartList){
+				System.out.println("delete item " + c.getEtsyitem().getItemId());
+				if(c.getEtsyitem().getItemId()==itemId){
+					//session.setAttribute("itemId", null);
+					cartList.remove(c);
+					break;
+				}
+			}
+			if(cartList.isEmpty()){
+				cartList=null;
+			}
 			session.setAttribute("delete",null);
 		}
 		// get user from the session
-		// Etsyuser user = (Etsyuser) session.getAttribute("user");
-		Etsyuser user = new Etsyuser() ;
-		
-		 user.setCredit(0);
+		Etsyuser user = (Etsyuser) session.getAttribute("user");		
+		/* user.setCredit(0);
 		  user.setEmail("fdkjghfdkj");
 		  user.setName("fnhdjkhgf"); 
 		  user.setPassword("fjd");
-		 user.setUserId(4);
+		 user.setUserId(4);*/
 		// create a temp cart
 		Etsycart cObj = new Etsycart();
-		List<Etsycart> cartList = new ArrayList<Etsycart>();
-
 		Etsyitem itemObj = new Etsyitem();
 		itemObj = DBUtil.getSelectedItem(itemId);
 		if (quanStr != null) {
@@ -121,7 +134,7 @@ public class ServletTempCart extends HttpServlet {
 		if (user != null) {
 			buttons += "<br><a href='CheckoutCart' class='btn pull-right btn-primary btn-lg'>Checkout</a>";
 		} else
-			buttons += "<br><a href='UserProfile.jsp' class='btn pull-right btn-primary btn-lg'>CheckOut</a>";
+			buttons += "<br><a href='Login.jsp' class='btn pull-right btn-primary btn-lg'>CheckOut</a>";
 		buttons += "<a href='EditCart?empty=y'class='btn pull-left btn-warning btn-lg'>Empty your cart</a>";
 		// Long count = DBUtil.itemsInCart(user);
 		// System.out.println("count " + count);

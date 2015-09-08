@@ -40,10 +40,11 @@ public class ServletEditCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost");
-		int prodId=0;
+		long prodId=0;
 		String idStr= request.getParameter("itemId");
 		if(idStr!=null){
-			prodId = Integer.parseInt(idStr);
+			prodId = Long.parseLong(idStr);
+			System.out.println("Item id " + prodId);
 		}
 		HttpSession session = request.getSession();
 		Etsyuser user = (Etsyuser) session.getAttribute("user");
@@ -54,7 +55,8 @@ public class ServletEditCart extends HttpServlet {
 				//DBUtil.deleteAll(user);
 			}
 		}else{
-			session.setAttribute("cartList", null);
+			session.setAttribute("itemId",prodId);
+			//session.setAttribute("cartList", null);
 			//DBUtil.delete(prodId,user);
 		}
 		session.setAttribute("delete", "yes");

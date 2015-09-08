@@ -23,7 +23,7 @@ public class DBUtil {
 		return emf;
 	}
 	
-	public static Etsyitem getSelectedItem(int id) {
+	public static Etsyitem getSelectedItem(long id) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		String sql = "select e from Etsyitem e where e.itemId=" + id;
 		System.out.println(sql);

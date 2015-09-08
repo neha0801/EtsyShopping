@@ -1,9 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -51,6 +49,14 @@ public class Etsyitem implements Serializable {
 	public Etsyitem() {
 	}
 
+	public Etsyitem(String name, String picture, String description, double price, double shipping) {
+		this.itemName = name;
+		this.itenPicture = picture;
+		this.itemDescription = description;
+		this.itemPrice = price;
+		this.itemShippingcost = shipping;
+	}
+	
 	public long getItemId() {
 		return this.itemId;
 	}

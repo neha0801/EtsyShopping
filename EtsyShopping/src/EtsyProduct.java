@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.Etsyitem;
 
@@ -50,9 +49,8 @@ public class EtsyProduct extends HttpServlet {
 				
 				if(productList.get(i).getItemInstock() == 1){
 					productListMsg+="<td>AVAILABLE";
-				}else{
+				}else
 					productListMsg+="<td style='color:red'>NOT FOR SALE";
-				}
 				productListMsg+="</td></tr>";
 			}
 		}
