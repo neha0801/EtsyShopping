@@ -9,7 +9,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-
 import model.Etsycart;
 import model.Etsyitem;
 import model.Etsyuser;
@@ -180,5 +179,23 @@ public class DBUtil {
 		}
 	}
 	
+	public static void updateUserCart(Etsyuser user) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		String sql = "Update Etsycart c set c.etsyuser = :user where c.cartStatus = 0";
+		System.out.println(sql);
+		Query query = em.createQuery(sql, Etsycart.class).setParameter("user", user);
+		System.out.println(sql);
+		trans.begin();
+		try {
+			query.executeUpdate();
+			trans.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+	}
 	
 }
