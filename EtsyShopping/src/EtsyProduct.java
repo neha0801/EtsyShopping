@@ -27,31 +27,29 @@ public class EtsyProduct extends HttpServlet {
 		productListMsg = "";
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		productListMsg = "";
-		List<Etsyitem> productList = EtsyitemDB.select();
+		List<Etsyitem> productList = EtsyitemDB.selectByInstock();
 
 		if (!productList.isEmpty()) {
 			for (int i = 0; i < productList.size(); i++) {
-				productListMsg += "<tr><td><img src='"+ productList.get(i).getItenPicture() + "' width ='200' height='200' style=align:center></td>"
+				System.out.println("product list check");
+				productListMsg += "<tr><td><img src='"
+						+ productList.get(i).getItenPicture()
+						+ "' width ='200' height='200' style=align:center></td>"
 						+ "<td width=\"60%\"><a href=\"EtsyDetails?itemId="
-						+ productList.get(i).getItemId()
-						+ "\">"
+						+ productList.get(i).getItemId() + "\">"
 						+ productList.get(i).getItemName()
 						+ "</a></td><td width=\"40%\">"
 						+ formattedPrice(productList.get(i).getItemPrice())
 						+ "</td>";
-				
-				if(productList.get(i).getItemInstock() >= 1){
-					productListMsg+="<td>AVAILABLE";
-				}else
-					productListMsg+="<td style='color:red'>NOT FOR SALE";
-				productListMsg+="</td></tr>";
+
+				if (productList.get(i).getItemInstock() >= 1) {
+					productListMsg += "<td>AVAILABLE";
+				} else
+					productListMsg += "<td style='color:red'>NOT FOR SALE";
+				productListMsg += "</td></tr>";
 			}
 		}
 		request.setAttribute("productListMsg", productListMsg);
@@ -71,20 +69,30 @@ public class EtsyProduct extends HttpServlet {
 		if ((keyword != null) && (!keyword.equals(""))) {
 			result = EtsyitemDB.selectByKeyword(keyword);
 		} else {
-			result = EtsyitemDB.selectByInstock(1);
+			result = EtsyitemDB.selectByInstock();
 		}
 
 		if (!result.isEmpty()) {
 			for (int i = 0; i < result.size(); i++) {
-				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId="
-						+ result.get(i).getItemId()
-						+ "\">"
+				productListMsg += "<tr><td width=\"10%\"><img src=\""
+						+ result.get(i).getItenPicture()
+						+ "\" alt=\"No image\" width=\"42\" height=\"42\"></td><td width=\"50%\"><a href=\"EtsyDetails?itemId="
+						+ result.get(i).getItemId() + "\">"
 						+ result.get(i).getItemName()
 						+ "</a></td><td width=\"40%\">"
-						+ formattedPrice(result.get(i).getItemPrice())
-						+ "</td></tr>";
+						+ formattedPrice(result.get(i).getItemPrice());
+						
+				if (result.get(i).getItemInstock() >= 1) {
+					productListMsg += "<td>AVAILABLE";
+				} else
+					productListMsg += "<td style='color:red'>NOT FOR SALE";
+				productListMsg += "</td></tr>";
 			}
 		}
+
+		request.setAttribute("productListMsg", productListMsg);
+		getServletContext().getRequestDispatcher("/EtsyitemList.jsp").forward(
+				request, response);
 	}
 
 	public static String formattedPrice(double total) {

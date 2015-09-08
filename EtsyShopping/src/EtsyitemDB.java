@@ -38,7 +38,7 @@ public class EtsyitemDB {
 	
 	public static List<Etsyitem> selectByUserName(String userName) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String query = "SELECT e FROM Etsyitem e WHERE e.etsyuser.name = " + userName;
+		String query = "SELECT e FROM Etsyitem e WHERE e.etsyuser.name = '" + userName + "'";
 		TypedQuery<Etsyitem> q = em.createQuery(query, Etsyitem.class);
 		try {
 			List<Etsyitem> itemList = q.getResultList();
@@ -50,9 +50,9 @@ public class EtsyitemDB {
 		}
 	}
 	
-	public static List<Etsyitem> selectByInstock(int instock) {
+	public static List<Etsyitem> selectByInstock() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String query = "SELECT e FROM Etsyitem e WHERE e.itemInstock = " + instock;
+		String query = "SELECT e FROM Etsyitem e WHERE e.itemInstock >=1";
 		TypedQuery<Etsyitem> q = em.createQuery(query, Etsyitem.class);
 		try {
 			List<Etsyitem> productList = q.getResultList();
@@ -84,6 +84,21 @@ public class EtsyitemDB {
 		trans.begin();
 		try {
 			em.persist(item);
+			trans.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static void update(Etsyitem item) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		trans.begin();
+		try {
+			em.merge(item);
 			trans.commit();
 		} catch (Exception e) {
 			System.out.println(e);
