@@ -96,7 +96,7 @@ public class ServletOrderHistory extends HttpServlet {
 				tableData += "</td>";
 				tableData += "<td>";
 				tableData += "<a class='btn btn-danger btn-sm' href='ReturnItem?cartId="
-						+ c.getCartId() + "'>Return</a>";
+						+ c.getCartId() + "&itemId=" + c.getEtsyitem().getItemId()+"'>Return</a>";
 				tableData += "</td>";
 				tableData += "</tr>";
 			}

@@ -38,11 +38,14 @@ public class ServletReturnItem extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cartIdStr = request.getParameter("cartId");
+		String itemIdStr = request.getParameter("itemId");
 		int cartId=0;
-		if(cartIdStr!=null){
+		int itemId=0;
+		if(cartIdStr!=null && itemIdStr!=null){
 			cartId= Integer.parseInt(cartIdStr);
+			itemId= Integer.parseInt(itemIdStr);
 		}
-		DBUtil.returnItem(cartId);
+		DBUtil.returnItem(cartId,itemId);
 		getServletContext().getRequestDispatcher("/OrderHistory").forward(request, response);
 		
 	}

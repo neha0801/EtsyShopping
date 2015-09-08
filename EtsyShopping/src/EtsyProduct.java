@@ -47,7 +47,7 @@ public class EtsyProduct extends HttpServlet {
 						+ formattedPrice(productList.get(i).getItemPrice())
 						+ "</td>";
 				
-				if(productList.get(i).getItemInstock() == 1){
+				if(productList.get(i).getItemInstock() >= 1){
 					productListMsg+="<td>AVAILABLE";
 				}else
 					productListMsg+="<td style='color:red'>NOT FOR SALE";
