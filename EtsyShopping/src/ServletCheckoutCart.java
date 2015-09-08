@@ -115,6 +115,7 @@ public class ServletCheckoutCart extends HttpServlet {
 				tableData += "</tr>";
 			}
 			tableData += "</table>";
+			
 			tableData+= "<a href='OrderConfirm'class='btn pull-right btn-warning' >Place your order</a>";
 		}else
 			tableData="Your Cart is empty";

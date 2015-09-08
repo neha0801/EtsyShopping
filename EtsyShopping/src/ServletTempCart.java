@@ -44,47 +44,48 @@ public class ServletTempCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("dopost");
-		List<Etsycart> cartList = null;
-		// get the quantity from item detail page
-		 String quanStr= request.getParameter("quantity");
-		// temp value
-		//String quanStr = "1";
-		// get the itemId selected from itemdetail page
-		 
-		// temp value to test
 
+		System.out.println("dopost");
 		HttpSession session = request.getSession();
-		String itemIdStr=request.getParameter("itemId");
+		List<Etsycart> cartList = (List<Etsycart>) session
+				.getAttribute("cartList");
+		// get the quantity from item detail page
+		String quanStr = request.getParameter("quantity");
+
+		String itemIdStr = request.getParameter("itemId");
 		System.out.println(request.getParameter("itemId"));
 		long itemId = 0;
-		if(itemIdStr!=null)
+		if (itemIdStr != null)
 			itemId = Long.parseLong(request.getParameter("itemId"));
-		//int itemId= Integer.parseInt(itemIdStr);
+		// int itemId= Integer.parseInt(itemIdStr);
 		String str = (String) session.getAttribute("delete");
-		if(str!=null){
+		if (str != null) {
 			itemId = (long) session.getAttribute("itemId");
 			cartList = (List<Etsycart>) session.getAttribute("cartList");
-			for(Etsycart c : cartList){
-				System.out.println("delete item " + c.getEtsyitem().getItemId());
-				if(c.getEtsyitem().getItemId()==itemId){
-					//session.setAttribute("itemId", null);
+			for (Etsycart c : cartList) {
+				System.out
+						.println("delete item " + c.getEtsyitem().getItemId());
+				if (c.getEtsyitem().getItemId() == itemId) {
+					// session.setAttribute("itemId", null);
 					cartList.remove(c);
 					break;
 				}
 			}
-			if(cartList.isEmpty()){
-				cartList=null;
+			if (cartList.isEmpty()) {
+				cartList = null;
 			}
-			session.setAttribute("delete",null);
+			session.setAttribute("delete", null);
 		}
 		// get user from the session
-		Etsyuser user = (Etsyuser) session.getAttribute("user");		
-		/* user.setCredit(0);
-		  user.setEmail("fdkjghfdkj");
-		  user.setName("fnhdjkhgf"); 
-		  user.setPassword("fjd");
-		 user.setUserId(4);*/
+		Etsyuser user = (Etsyuser) session.getAttribute("user");
+		/*if (user == null) {
+			user = new Etsyuser();
+			user.setCredit(0);
+			user.setEmail("fdkjghfdkj");
+			user.setName("fnhdjkhgf");
+			user.setPassword("fjd");
+			user.setUserId(5);
+		}*/
 		// create a temp cart
 		Etsycart cObj = new Etsycart();
 		Etsyitem itemObj = new Etsyitem();
@@ -98,29 +99,30 @@ public class ServletTempCart extends HttpServlet {
 			// for temp cart user id is null
 			cObj.setEtsyuser(user);
 			// System.out.println("userid" + user.getUserId());
-			System.out.println(cartList);
+			//System.out.println("user Id from cart "		+ cObj.getEtsyuser().getUserId());
+			System.out.println("test list " + cartList);
 			cObj.setCartStatus(0);
 			if (session.getAttribute("cartList") == null) {
 				cartList = DBUtil.getUserCart(user);
-				//cartList.add(cObj);
+				// cartList.add(cObj);
 			} else {
 				cartList = (List<Etsycart>) session.getAttribute("cartList");
-				//cartList.add(cObj);
+				// cartList.add(cObj);
 			}
 			for (Etsycart c : cartList) {
-					if (c.getEtsyitem().getItemId() == (cObj.getEtsyitem()
-							.getItemId())) {
-						c.setQuantity(cObj.getQuantity() + c.getQuantity());
-						c.setTotalprice(c.getQuantity()
-								* c.getEtsyitem().getItemPrice());
-						break;
-					} else {
-						cartList.add(cObj);
-						break;
-					}
-				
+				if (c.getEtsyitem().getItemId() == (cObj.getEtsyitem()
+						.getItemId())) {
+					c.setQuantity(cObj.getQuantity() + c.getQuantity());
+					c.setTotalprice(c.getQuantity()
+							* c.getEtsyitem().getItemPrice());
+					break;
+				} else {
+					cartList.add(cObj);
+					break;
+				}
+
 			}
-			if(cartList.isEmpty()){
+			if (cartList.isEmpty()) {
 				cartList.add(cObj);
 			}
 
@@ -197,7 +199,8 @@ public class ServletTempCart extends HttpServlet {
 				tableData += "$" + c.getEtsyitem().getItemShippingcost();
 				tableData += "</td>";
 				tableData += "<td>";
-				c.setTotalprice(c.getTotalprice() + c.getEtsyitem().getItemShippingcost());
+				c.setTotalprice(c.getTotalprice()
+						+ c.getEtsyitem().getItemShippingcost());
 				tableData += "$" + (c.getTotalprice());
 				tableData += "</td>";
 				tableData += "<td>";

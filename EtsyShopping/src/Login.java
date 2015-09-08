@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import customTools.DBUtil;
 import model.Etsyuser;
 
 /**
@@ -62,6 +63,7 @@ public class Login extends HttpServlet {
 					if (EtsyuserDB.selectByName(inputUserN).getPassword().equals(request.getParameter("password"))) {
 						Etsyuser user = EtsyuserDB.selectByName(inputUserN);
 						session.setAttribute("user", user);
+						DBUtil.updateUserCart(user);
 						//session.setAttribute("cartCheckout", EtsycartDB.selectByUserStatus(inputUserN, 0));
 						response.sendRedirect("/EtsyShopping/EtsyProduct");
 					} else {
