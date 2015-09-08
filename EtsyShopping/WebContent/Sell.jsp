@@ -40,26 +40,7 @@ function success() {
  -->
 </head>
 <body>
-<nav class="navbar navbar-default">
-<div class="container-fluid">
-<div class="navbar-header">
-<a class="navbar-brand" href="EtsyProduct">EtsyShopping</a>
-</div>
-<div>
-<ul class="nav navbar-nav navbar-right">
-<% if (session.getAttribute("name") == null) { %>
-<li><a href="Signup.jsp">Signup</a></li>
-<li><a href="Login.jsp">Login</a></li>
-<% } else { %>
-<li><a href="UserItemServlet">View My Products</a>
-<li><a href="ShowHistOrders">View Historical Orders</a></li>
-<li><a href="ShoppingCart.jsp">View Cart</a></li>
-<li><a href="Login?logout=true">Logout</a></li>
-<% } %>
-</ul>
-</div>
-</div>
-</nav>
+<jsp:include page="Navbar.jsp"/>
 <div class="container">
 <h1>Submit your item</h1>
 <br />

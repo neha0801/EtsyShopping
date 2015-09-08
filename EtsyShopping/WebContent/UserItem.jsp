@@ -11,26 +11,8 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<nav class="navbar navbar-default">
-<div class="container-fluid">
-<div class="navbar-header">
-<a class="navbar-brand" href="EtsyProduct">EtsyShopping</a>
-</div>
-<div>
-<ul class="nav navbar-nav navbar-right">
-<% if (session.getAttribute("name") == null) { %>
-<li><a href="Signup.jsp">Signup</a></li>
-<li><a href="Login.jsp">Login</a></li>
-<% } else { %>
-<li><a href="ShowHistOrders">View Historical Orders</a></li>
-<li><a href="ShoppingCart.jsp">View Cart</a></li>
-<li><a href="Login?logout=true">Logout</a></li>
-<% } %>
-</ul>
-</div>
-</div>
-</nav>
+<jsp:include page="Navbar.jsp"/>
 ${sellingList}
+${editproductform}
 </body>
 </html>

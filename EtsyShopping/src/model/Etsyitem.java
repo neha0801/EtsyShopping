@@ -49,12 +49,14 @@ public class Etsyitem implements Serializable {
 	public Etsyitem() {
 	}
 
-	public Etsyitem(String name, String picture, String description, double price, double shipping) {
+	public Etsyitem(String name, String picture, String description, double price, double shipping, int instock, Etsyuser user) {
 		this.itemName = name;
 		this.itenPicture = picture;
 		this.itemDescription = description;
 		this.itemPrice = price;
 		this.itemShippingcost = shipping;
+		this.itemInstock = instock;
+		this.etsyuser = user;
 	}
 	
 	public long getItemId() {

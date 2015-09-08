@@ -7,7 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import model.Etsycart;
+import model.Etsyitem;
+import model.Etsyuser;
 import customTools.DBUtil;
 
 /**
@@ -39,12 +43,17 @@ public class ServletReturnItem extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cartIdStr = request.getParameter("cartId");
 		String itemIdStr = request.getParameter("itemId");
+		HttpSession session = request.getSession();
 		int cartId=0;
-		int itemId=0;
+		long itemId=0;
+		
 		if(cartIdStr!=null && itemIdStr!=null){
 			cartId= Integer.parseInt(cartIdStr);
-			itemId= Integer.parseInt(itemIdStr);
+			itemId= Long.parseLong(itemIdStr);
 		}
+		Etsycart cart = DBUtil.getSelectedCartItem(cartId);
+		Etsyuser user = (Etsyuser) session.getAttribute("user");
+		DBUtil.updateCredit(user, cart.getTotalprice());
 		DBUtil.returnItem(cartId,itemId);
 		getServletContext().getRequestDispatcher("/OrderHistory").forward(request, response);
 		

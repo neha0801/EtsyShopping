@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import customTools.DBUtil;
+
 import model.Etsyuser;
 
 /**
@@ -34,11 +34,9 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (request.getParameter("logout") != null) {
-			/*session.removeAttribute("user");
-			session.removeAttribute("cartList");
-			session.removeAttribute("itemId");
-			session.setAttribute("delete",null);*/
+
 			session.invalidate();
+
 			getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 		doPost(request, response);
@@ -61,9 +59,11 @@ public class Login extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				} else {
 					if (EtsyuserDB.selectByName(inputUserN).getPassword().equals(request.getParameter("password"))) {
+
 						Etsyuser user = EtsyuserDB.selectByName(inputUserN);
 						session.setAttribute("user", user);
 						System.out.println("user name login " + user.getName());
+
 						//session.setAttribute("cartCheckout", EtsycartDB.selectByUserStatus(inputUserN, 0));
 						response.sendRedirect("/EtsyShopping/EtsyProduct");
 					} else {
@@ -91,6 +91,8 @@ public class Login extends HttpServlet {
 					EtsyuserDB.insert(user);
 					System.out.println("test " + user.getName());
 					session.setAttribute("user", user);
+
+
 					response.sendRedirect("/EtsyShopping/EtsyProduct");
 				} else {
 					signupErr += "<script type=\"text/javascript\">validateEmail()</script>";
