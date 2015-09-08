@@ -19,7 +19,7 @@
 </div>
 <div>
 <ul class="nav navbar-nav navbar-right">
-<% if (session.getAttribute("name") == null) { %>
+<% if (session.getAttribute("userName") == null) { %>
 <li><a href="Signup.jsp">Signup</a></li>
 <li><a href="Login.jsp">Login</a></li>
 <% } else {%>

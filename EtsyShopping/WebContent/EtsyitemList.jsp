@@ -19,7 +19,7 @@
 </div>
 <div>
 <ul class="nav navbar-nav navbar-right">
-<% if (session.getAttribute("name") == null) { %>
+<% if (session.getAttribute("userName") == null) { %>
 <li><a href="Signup.jsp">Signup</a></li>
 <li><a href="Login.jsp">Login</a></li>
 <% } else { %>
@@ -46,7 +46,8 @@
 <table class="table table-striped">
 <thead>
 <tr>
-<th width="60%">Product Name</th>
+<th width="10%">Picture</th>
+<th width="50%">Product Name</th>
 <th width="40%">Price</th>
 </tr>
 </thead>
@@ -54,7 +55,9 @@
 ${productListMsg}
 </tbody>
 </table>
+<% if (session.getAttribute("userName") != null) { %>
 <a href="Sell" class="btn btn-info" role="button">Sell</a>
+<% } %>
 </div>
 
 </body>

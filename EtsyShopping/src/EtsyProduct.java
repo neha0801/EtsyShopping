@@ -37,7 +37,7 @@ public class EtsyProduct extends HttpServlet {
 		
 		if (!productList.isEmpty()) {
 			for (int i = 0; i < productList.size(); i++) {
-				productListMsg += "<tr><td width=\"60%\"><a href=\"EtsyDetails?itemId=" + productList.get(i).getItemId() + "\">" + productList.get(i).getItemName() + "</a></td><td width=\"40%\">" + formattedPrice(productList.get(i).getItemPrice()) + "</td></tr>";
+				productListMsg += "<tr><td width=\"10%\"><img src=\"" + productList.get(i).getItenPicture() + "\" alt=\"No image\" width=\"42\" height=\"42\"></td><td width=\"50%\"><a href=\"EtsyDetails?itemId=" + productList.get(i).getItemId() + "\">" + productList.get(i).getItemName() + "</a></td><td width=\"40%\">" + formattedPrice(productList.get(i).getItemPrice()) + "</td></tr>";
 			}
 		}
 		request.setAttribute("productListMsg", productListMsg);

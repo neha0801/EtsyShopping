@@ -49,12 +49,14 @@ public class Etsyitem implements Serializable {
 	public Etsyitem() {
 	}
 	
-	public Etsyitem(String name, String picture, String description, double price, double shipping) {
+	public Etsyitem(String name, String picture, String description, double price, double shipping, int instock, Etsyuser user) {
 		this.itemName = name;
 		this.itenPicture = picture;
 		this.itemDescription = description;
 		this.itemPrice = price;
 		this.itemShippingcost = shipping;
+		this.itemInstock = instock;
+		this.etsyuser = user;
 	}
 
 	public long getItemId() {
@@ -73,8 +75,12 @@ public class Etsyitem implements Serializable {
 		this.itemDescription = itemDescription;
 	}
 
-	public int getItemInstock() {
-		return this.itemInstock;
+	public String getItemInstock() {
+		if (this.itemInstock == 1) {
+			return "Available";
+		} else {
+			return "NOT FOR SALE";
+		}
 	}
 
 	public void setItemInstock(int itemInstock) {

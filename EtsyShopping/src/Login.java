@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (request.getParameter("logout") != null) {
-			session.removeAttribute("name");
+			session.removeAttribute("userName");
 			getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 		doPost(request, response);
@@ -56,7 +56,7 @@ public class Login extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				} else {
 					if (EtsyuserDB.selectByName(inputUserN).getPassword().equals(request.getParameter("password"))) {
-						session.setAttribute("name", inputUserN);
+						session.setAttribute("userName", inputUserN);
 						//session.setAttribute("cartCheckout", EtsycartDB.selectByUserStatus(inputUserN, 0));
 						response.sendRedirect("/EtsyShopping/EtsyProduct");
 					} else {
@@ -82,7 +82,7 @@ public class Login extends HttpServlet {
 					String password = request.getParameter("password");
 					user.setPassword(password);
 					EtsyuserDB.insert(user);
-					session.setAttribute("name", user.getName());
+					session.setAttribute("userName", user.getName());
 					response.sendRedirect("/EtsyShopping/EtsyProduct");
 				} else {
 					signupErr += "<script type=\"text/javascript\">validateEmail()</script>";

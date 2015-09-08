@@ -41,7 +41,7 @@ public class EtsyDetails extends HttpServlet {
 		
 		Etsyitem item = EtsyitemDB.selectById(itemId);
 		
-		details += "<div class=\"container\"><div class=\"jumbotron\"><h4>Item Name: " + item.getItemName() + "</h4><h4>Description: <br />" + item.getItemDescription() + "</h4><h4>Price: $" + formattedPrice(item.getItemPrice()) + "</h4></div></div>";
+		details += "<div class=\"container\"><div class=\"jumbotron\"><h4>Item Name: " + item.getItemName() + "</h4><h4>Description: <br />" + item.getItemDescription() + "</h4><h4>Price: $" + formattedPrice(item.getItemPrice()) + "</h4><h4>Shipping Cost: $" + formattedPrice(item.getItemShippingcost()) + "</div></div>";
 		
 //		if (cart != null) {
 //			for (int i = 0; i < cart.size(); i++) {
@@ -52,7 +52,7 @@ public class EtsyDetails extends HttpServlet {
 //			}
 //		}
 
-		if (session.getAttribute("name") != null) {
+		if (session.getAttribute("userName") != null) {
 //			if (exist) {
 //				details += "<div class=\"container\"><br /><form class=\"form-horizontal\" role=\"form\" name=\"singleProd\" id=\"singleProd\" action=\"EtsyDetails\" method=\"post\">"
 //						+ "<input type=\"hidden\" name=\"itemId\" value=\"" + itemId + "\">"
