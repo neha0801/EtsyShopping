@@ -63,7 +63,7 @@ public class Login extends HttpServlet {
 					if (EtsyuserDB.selectByName(inputUserN).getPassword().equals(request.getParameter("password"))) {
 						Etsyuser user = EtsyuserDB.selectByName(inputUserN);
 						session.setAttribute("user", user);
-						DBUtil.updateUserCart(user);
+						System.out.println("user name login " + user.getName());
 						//session.setAttribute("cartCheckout", EtsycartDB.selectByUserStatus(inputUserN, 0));
 						response.sendRedirect("/EtsyShopping/EtsyProduct");
 					} else {

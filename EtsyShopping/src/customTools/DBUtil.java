@@ -107,15 +107,41 @@ public class DBUtil {
 		return cartList;
 	}
 	
-	public static void returnItem(int id) {
+	public static void returnItem(int id, int itemid) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		String sql;
 		TypedQuery<Etsycart> query;
+		TypedQuery<Etsyitem> query1;
 			sql = "Delete from Etsycart c  where c.cartId = " + id;
 			query = em.createQuery(sql, Etsycart.class);
+			System.out.println("Delete query: " + sql);
+			sql = "Update Etsyitem c set c.itemInstock= c.itemInstock + 1 where c.itemId = " + itemid;
+			query1 = em.createQuery(sql, Etsyitem.class);
+			System.out.println("update query:" + sql);
+
+		trans.begin();
+		try {
+			query.executeUpdate();
+			query1.executeUpdate();
+			trans.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			trans.rollback();
+		} finally {
+			em.close();
+		}
+	}
 	
-		System.out.println(sql);
+	public static void updateItem(long itemid) {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		String sql;
+		TypedQuery<Etsyitem> query;
+			sql = "Update Etsyitem c set c.itemInstock= c.itemInstock - 1 where c.itemId = " + itemid;
+			query = em.createQuery(sql, Etsyitem.class);
+			System.out.println("update query:" + sql);
+
 		trans.begin();
 		try {
 			query.executeUpdate();
@@ -127,7 +153,6 @@ public class DBUtil {
 			em.close();
 		}
 	}
-	
 	public static void delete(int prodId, Etsyuser user) {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();

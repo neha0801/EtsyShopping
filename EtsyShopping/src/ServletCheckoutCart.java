@@ -44,16 +44,18 @@ public class ServletCheckoutCart extends HttpServlet {
 		System.out.println("checkout do post");
 		HttpSession session = request.getSession();		
 		Etsyuser user = (Etsyuser) session.getAttribute("user");
+	
 		//request.setAttribute("user", user.getUserName());
 		//String mesg="";
 		List<Etsycart> cartList = (List<Etsycart>) session.getAttribute("cartList");
 		String message="";
-		//message = "<h2 style='color:red'>"+mesg+ "</h2>";
 		message += showCart(cartList);
 		request.setAttribute("message", message);
 		for(Etsycart c:cartList){
 			System.out.println(c.getCartId() + " " + c.getQuantity() + " " + c.getEtsyitem().getItemName());
 			DBUtil.insert(c);
+			DBUtil.updateItem(c.getEtsyitem().getItemId());
+			DBUtil.updateUserCart(user);
 		}
 		
 		getServletContext().getRequestDispatcher("/CheckoutCart.jsp").forward(request, response);
